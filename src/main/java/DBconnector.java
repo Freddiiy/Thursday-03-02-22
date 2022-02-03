@@ -13,10 +13,14 @@ public class DBconnector {
         singleton = con;
     }
 
-    public static Connection connection() throws ClassNotFoundException, SQLException {
+    public static Connection connection() {
         if ( singleton == null ) {
-            Class.forName( "com.mysql.cj.jdbc.Driver" );
-            singleton = DriverManager.getConnection( URL, USER, PW );
+            try {
+                Class.forName( "com.mysql.cj.jdbc.Driver" );
+                singleton = DriverManager.getConnection( URL, USER, PW );
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
         }
         return singleton;
     }
